@@ -1,0 +1,58 @@
+# Add this method to ServerConsumer class in wire/consumers.py
+# Place it after the receive_json method and before disconnect method
+
+    async def _broadcast_location_to_active_missions(self, lat: float, lng: float):
+        """Send driver location updates to all clients with active missions from this driver"""
+        if self.channel_layer is None:
+            return
+        
+        import json
+        import time
+        from wire.redis import redis_client
+        
+        # Find all active missions for this server
+        server_id = str(self.user.id)
+        pattern = f"mission:*:{server_id}:*"
+        cursor = 0
+        
+        try:
+            while True:
+                cursor, keys = await redis_client.scan(cursor=cursor, match=pattern, count=100)
+                for key in keys:
+                    try:
+                        mission_json = await redis_client.get(key)
+                        if mission_json:
+                            mission = json.loads(mission_json)
+                            # Only send updates for ACTIVE missions
+                            if mission.get("status") == "ACTIVE":
+                                client_id = mission.get("client_id")
+                                mission_id = mission.get("mission_id", key)
+                                
+                                # Send location update to client
+                                await self.channel_layer.group_send(
+                                    f"user_{client_id}",
+                                    {
+                                        "type": "driver_location_update",
+                                        "mission_id": mission_id,
+                                        "lat": lat,
+                                        "lng": lng,
+                                        "timestamp": time.time(),
+                                    },
+                                )
+                    except Exception as e:
+                        print(f"[ServerConsumer] Error processing mission {key}: {e}")
+                        continue
+                
+                if cursor == 0:
+                    break
+        except Exception as e:
+            print(f"[ServerConsumer] Error broadcasting location: {e}")
+
+
+# Also update the receive_json method in ServerConsumer:
+# Change line 48 from:
+#   await self.send_json({"status": "heartbeat_received"})
+# To:
+#   await self.send_json({"status": "heartbeat_received"})
+#   # Broadcast location to active mission clients
+#   await self._broadcast_location_to_active_missions(lat, lng)

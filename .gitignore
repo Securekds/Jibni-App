@@ -1,0 +1,45 @@
+# React Native
+node_modules/
+ios/build/
+android/build/
+*.log
+
+# React Native / Expo
+.expo/
+.expo-shared/
+
+# Python / Django
+__pycache__/
+*.py[cod]
+*$py.class
+*.sqlite3
+*.log
+db.sqlite3
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Django specific
+*.pot
+*.pyc
+*.mo
+*.log
+local_settings.py
+media/
+staticfiles/
+
+# VSCode
+.vscode/
+
+# macOS
+.DS_Store
+
+# Environment variables
+.env
+.env.*.local
+
+# Build outputs
+build/
+dist/
