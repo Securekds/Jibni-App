@@ -4,21 +4,6 @@
 
 console.log('[INDEX] Starting app initialization...');
 
-// Enable react-native-screens for React Navigation
-try {
-  console.log('[INDEX] Enabling react-native-screens...');
-  const screens = require('react-native-screens');
-  if (screens && screens.enableScreens) {
-    screens.enableScreens(true);
-    console.log('[INDEX] ✓ react-native-screens enabled');
-  } else {
-    console.warn('[INDEX] react-native-screens.enableScreens not available');
-  }
-} catch (e) {
-  console.warn('[INDEX] Could not enable react-native-screens:', e.message);
-  console.warn('[INDEX] This might cause NavigationContainer issues');
-}
-
 // Polyfill for crypto and other Node.js modules - MUST be first
 try {
   console.log('[INDEX] Loading polyfills...');
@@ -33,15 +18,26 @@ try {
   console.error('[INDEX] Polyfill error stack:', e.stack);
 }
 
+// ADD FCM BACKGROUND HANDLER
+try {
+  console.log('[INDEX] Setting up FCM background handler...');
+  const messaging = require('@react-native-firebase/messaging').default;
+  messaging().setBackgroundMessageHandler(async remoteMessage => {
+    console.log('[FCM] 🔔 Background message received!', remoteMessage);
+  });
+  console.log('[INDEX] ✓ FCM background handler registered');
+} catch (e) {
+  console.error('[INDEX] Error setting up FCM:', e);
+}
+
 import { AppRegistry } from 'react-native';
 console.log('[INDEX] AppRegistry imported');
 
 try {
   console.log('[INDEX] Loading App component...');
-  // TEMPORARY: Use simple App to test if the issue is with providers
-  const App = require('./App-simple').default;
-  // const App = require('./App').default;
-  console.log('[INDEX] ✓ App component loaded (using simple version)');
+  // USE TEST APP - NO react-native-screens dependency
+  const App = require('./AppTest').default;
+  console.log('[INDEX] ✓ Test App component loaded');
   
   const appConfig = require('./app.json');
   const appName = appConfig.name || 'Jibni';

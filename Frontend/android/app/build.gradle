@@ -20,7 +20,7 @@ react {
     /* Variants */
     //   The list of variants to that are debuggable. For those we're going to
     //   skip the bundling of the JS bundle and the assets. By default is just 'debug'.
-    //   If you add flavors like lite, prod, etc. you'll have to list your debuggableVariants.
+    //   If you add debuggableVariants like lite, prod, etc. you'll have to list your debuggableVariants.
     // debuggableVariants = ["liteDebug", "prodDebug"]
 
     /* Bundling */
@@ -118,3 +118,6 @@ dependencies {
         implementation jscFlavor
     }
 }
+
+// ADD THIS LINE AT THE VERY BOTTOM - Google Services Plugin
+apply plugin: 'com.google.gms.google-services'

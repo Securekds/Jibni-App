@@ -1,14 +1,4 @@
 {
-  "expo": {
-    "name": "Jibni",
-    "slug": "jibni",
-    "version": "0.0.1",
-    "android": {
-      "package": "com.jibni.jibni"
-    },
-    "ios": {
-      "bundleIdentifier": "com.jibni.jibni"
-    },
-    "newArchEnabled": true
-  }
+  "name": "Jibni",
+  "displayName": "Jibni"
 }

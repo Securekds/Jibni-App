@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "867546543142",
+    "project_id": "jibni-app",
+    "storage_bucket": "jibni-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:867546543142:android:d7e8e025e2c0e25e0222e7",
+        "android_client_info": {
+          "package_name": "com.jibni.jibni"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPa2U1V7v4n0XKSx494IFgKtYHEp88sHg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

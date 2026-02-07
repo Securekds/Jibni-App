@@ -1,4 +1,5 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
@@ -6,6 +7,9 @@
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <!-- ADD THIS PERMISSION for Android 13+ notifications -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
     <application
       android:name=".MainApplication"
@@ -16,6 +20,13 @@
       android:usesCleartextTraffic="true"
       android:theme="@style/AppTheme"
       android:supportsRtl="true">
+
+       <!-- ADD THESE META-DATA TAGS FOR FCM -->
+      <meta-data
+          android:name="com.google.firebase.messaging.default_notification_channel_id"
+          android:value="default_channel"
+          tools:replace="android:value" />
+
       <activity
         android:name=".SplashActivity"
         android:theme="@style/SplashTheme"
@@ -38,4 +49,3 @@
           android:value="AIzaSyBmTHYTBqjwA1GVvvBHPOuPP_41K6k-8bE" />
     </application>
 </manifest>
-
